@@ -1,0 +1,394 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Player stats and high scores for takepoint.io. Kills, deaths, hours played, accuracy and K/D records for every class.">
+
+    <title>Stats | takepoint.io - Player Stats | Customize - Upgrade - Compete</title>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+        integrity="" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:700"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="http://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+    <link href="/css/all.css" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png"
+        sizes="16x16">
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png"
+        sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-96x96.png"
+        sizes="96x96">
+
+    <style>
+        body {
+            font-family: 'Lato';
+        }
+
+        .fa-btn {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+
+<body id="app-layout">
+    <div class="container" id="headerContainer">
+        <div class="row">
+            <div class="pull-left col-xs-4 no-padding-left">
+                <a class="navbar-brand" href="/"
+                    id="brandLink">stats.takepoint.io</a>
+            </div>
+            <div
+                class="pull-right col-xs-8 col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-2 col-lg-3 col-lg-offset-3 padding-right-8px">
+                <div class="input-group" id="searchBox">
+                    <input type="text" class="form-control" id="searchUsername" placeholder="Username" maxlength="12">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="search()"
+                            id="searchButton">Search</button>
+                    </span>
+                </div>
+                <script>
+                    document.onkeydown = function (event) {
+                        if (event.keyCode == 13) {
+                            search();
+                        }
+                    };
+
+                    function search() {
+                        var username = document.getElementById('searchUsername').value;
+                        var currentBaseURL = window.location.href.split("/")[2];
+                        document.location = '/user/' + username;
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="pageContainer">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <h2 class="text-center"><%= player.username %> Player Summary</h2>
+                <h2 class="text-center key-stat"><%= player.pointsTaken.toLocaleString() %> Points Taken </h2>
+                <h2 class="text-center key-stat"><%= player.pointsNeutralized.toLocaleString() %> Points Neutralized</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="blue-border-2px text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        <tr>
+                            <td>Total Score</td>
+                            <td><%= player.score.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Time Played</td>
+                            <td><%= formatTime(player.timePlayed) %></td>
+                        </tr>
+                        <tr>
+                            <td>Overall K/D Ratio</td>
+                            <td>
+                                <%= player.kdr.toLocaleString(undefined, {minimumFractionDigits: 2}) %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Score Per Minute</td>
+                            <td>
+                                <%= player.spm.toLocaleString(undefined, {minimumFractionDigits: 2}) %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Longest Killstreak</td>
+                            <td>
+                                <%= player.killstreak.toLocaleString() %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Kills</td>
+                            <td><%= player.kills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Total Deaths</td>
+                            <td><%= player.deaths.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td><%= player.accuracy.toLocaleString(undefined, {minimumFractionDigits: 2}) + "%" %></td>
+                        </tr>
+                        <tr>
+                            <td>Total Distance Covered</td>
+                            <td><%= player.distanceCovered %></td>
+                        </tr>
+                        <tr>
+                            <td>Double Kills</td>
+                            <td><%= player.doubleKills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Triple Kills</td>
+                            <td><%= player.tripleKills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Multi Kills</td>
+                            <td><%= player.multiKills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Started Playing</td>
+                            <td><%= player.joinedAt %></td>
+                        </tr>
+                        <tr>
+                            <td>Last Active</td>
+                            <td><%= player.activeAt %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="table-responsive">
+                    <table class="table loadout-table">
+                        <thead>
+                            <tr class="blue-border-2px">
+                                <th colspan="2">
+                                    <h2 class="text-center">Favorite Loadouts</h2>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h3><%= player.mostUsedWeapon[1] %></h3>
+                                    <p>Selected <%= player.mostUsedWeapon[0].selected.toLocaleString() %> times</p>
+                                </td>
+                                <td><img id="classImage"
+                                        src="/img/<%= player.mostUsedWeapon[1] %>.jpg"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3>Upgrades Selected</h3>
+                                    <p>Speed Increase: <%= player.upgrades.speed.toLocaleString() %></p>
+                                    <p>Faster Reload: <%= player.upgrades.reload.toLocaleString() %></p>
+                                    <p>Larger Mags: <%= player.upgrades.mags.toLocaleString() %></p>
+                                    <p>Extend View: <%= player.upgrades.view.toLocaleString() %></p>
+                                    <p>Heal Faster: <%= player.upgrades.heal.toLocaleString() %></p>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3><%= player.mostUsedPerk[0] %></h3>
+                                    <p>Used <%= player.mostUsedPerk[1] %> times</p>
+                                </td>
+                                <td><img id="classImage"
+                                        src="/img/<%= player.mostUsedPerk[0] %>.jpg"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-6 col-sm-3">
+                <h2 class="text-center">Pistol</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="red-border-2px text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Kills</td>
+                            <td><%= player.weapons.pistol.kills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Time Played</td>
+                            <td><%= formatTime(player.weapons.pistol.timePlayed) %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Fired</td>
+                            <td><%= player.weapons.pistol.shotsFired.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Hit</td>
+                            <td><%= player.weapons.pistol.shotsHit.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td>
+                                <%= ((100 * player.weapons.pistol.shotsHit / player.weapons.pistol.shotsFired) || 0).toFixed(2) + "%" %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Damage Dealt</td>
+                            <td><%= player.weapons.pistol.damageDealt.toLocaleString() %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+                <h2 class="text-center">Shotgun</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="green-border-2px text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Times Selected</td>
+                            <td><%= player.weapons.shotgun.selected.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Kills</td>
+                            <td><%= player.weapons.shotgun.kills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Time Played</td>
+                            <td><%= formatTime(player.weapons.shotgun.timePlayed) %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Fired</td>
+                            <td><%= player.weapons.shotgun.shotsFired.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Hit</td>
+                            <td><%= player.weapons.shotgun.shotsHit.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td>
+                                <%= ((100 * player.weapons.shotgun.shotsHit / player.weapons.shotgun.shotsFired) || 0).toFixed(2) + "%" %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Damage Dealt</td>
+                            <td><%= player.weapons.shotgun.damageDealt.toLocaleString() %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+                <h2 class="text-center">Assault</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="aqua-border-2px text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Times Selected</td>
+                            <td><%= player.weapons.assault.selected.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Kills</td>
+                            <td><%= player.weapons.assault.kills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Time Played</td>
+                            <td><%= formatTime(player.weapons.assault.timePlayed) %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Fired</td>
+                            <td><%= player.weapons.assault.shotsFired.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Hit</td>
+                            <td><%= player.weapons.assault.shotsHit.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td>
+                                <%= ((100 * player.weapons.assault.shotsHit / player.weapons.assault.shotsFired) || 0).toFixed(2) + "%" %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Damage Dealt</td>
+                            <td><%= player.weapons.assault.damageDealt.toLocaleString() %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+                <h2 class="text-center">Sniper</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="blue-border-2px text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Times Selected</td>
+                            <td><%= player.weapons.sniper.selected.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Kills</td>
+                            <td><%= player.weapons.sniper.kills.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Time Played</td>
+                            <td><%= formatTime(player.weapons.sniper.timePlayed) %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Fired</td>
+                            <td><%= player.weapons.sniper.shotsFired.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Shots Hit</td>
+                            <td><%= player.weapons.sniper.shotsHit.toLocaleString() %></td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td>
+                                <%= ((100 * player.weapons.sniper.shotsHit / player.weapons.sniper.shotsFired) || 0).toFixed(2) + "%" %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Damage Dealt</td>
+                            <td><%= player.weapons.sniper.damageDealt.toLocaleString() %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="margin-bottom-50px"></div>
+    </div>
+
+    <div class="container">
+        <footer class="footer navbar-fixed-bottom" id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6 margin-top-10px" style="text-align: left">
+                        <p>Copyleft <a class="copyleft">&copy;</a>
+                            <%= new Date(Date.now()).getFullYear() %> takepoint.io. All rights reversed.
+                        </p>
+                    </div>
+                    <div class="col-xs-6 margin-top-10px" style="text-align: right">
+                        <a class="plain-link" href="/about">About</a> | <a class="plain-link" href="/privacy">Privacy
+                            Policy</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity=""
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity=""
+        crossorigin="anonymous"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+</body>
+
+</html>

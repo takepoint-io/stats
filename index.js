@@ -16,8 +16,19 @@ app.get('/stat/*', async (req, res) => {
     let leaderboard = await renderers.leaderboard(leaderboardName);
     if (!leaderboard) {
         res.status(404).send("That leaderboard doesn't exist.");
+        return;
     }
     res.status(200).send(leaderboard);
+});
+
+app.get('/user/*', async (req, res) => {
+    let username = req.path.split("/")[2];
+    let playerStats = await renderers.player(username);
+    if (!playerStats) {
+        res.status(404).send("That player doesn't exist.");
+        return;
+    }
+    res.status(200).send(playerStats);
 });
 
 app.use('/img', express.static('img'));

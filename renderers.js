@@ -1,6 +1,10 @@
 require('dotenv').config();
 const ejs = require('ejs');
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const TimeAgo = require('javascript-time-ago');
+const en = require('javascript-time-ago/locale/en');
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo('en-US');
 const leaderboardMappings = {
     pointstaken: {
         name: 'Most Points Taken',
@@ -235,6 +239,27 @@ const renderers = {
             data: which, 
             statsURL,
             table,
+        });
+        return html;
+    },
+    player: async (username) => {
+        let playersFound = await players.find({ usernameLower: username.toLowerCase() }).toArray();
+        if (!playersFound.length) return;
+        let player = playersFound[0];
+        player.distanceCovered = leaderboardMappings.distance.format(player.distanceCovered);
+        player.joinedAt = timeAgo.format(player.createdAt);
+        player.activeAt = timeAgo.format(player.lastActive);
+        player.mostUsedWeapon = [
+            [player.weapons.sniper, "sniper"], 
+            [player.weapons.shotgun, "shotgun"], 
+            [player.weapons.assault, "assault"]
+        ].sort((a, b) => b[0].selected - a[0].selected)[0];
+        let perks = Object.keys(player.perks)
+        let mostUsedPerkName = perks.sort((a, b) => perks[b] - perks[a])[0];
+        player.mostUsedPerk = [mostUsedPerkName, player.perks[mostUsedPerkName]];
+        let html = await ejs.renderFile('./templates/user.ejs', {
+            player,
+            formatTime: leaderboardMappings.hours.format
         });
         return html;
     }

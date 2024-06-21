@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Player stats and high scores for takepoint.io. Kills, deaths, shots fired, accuracy and distance records for every class.">
+    <meta name="description" content="Player stats and high scores for takepoint.io. Kills, deaths, hours played, accuracy and K/D records for every class.">
 
     <title>Stats | takepoint.io - Player Stats | Customize - Upgrade - Compete</title>
 
@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
     <link href="/css/all.css" rel="stylesheet">
 
-    <link rel="icon" type="image/png" href="<%= statsURL %>/img/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="<%= statsURL %>/img/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="<%= statsURL %>/img/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
 
     <style>
         body {
@@ -32,7 +32,7 @@
     <div class="container" id="headerContainer">
         <div class="row">
             <div class="pull-left col-xs-4 no-padding-left">
-                <a class="navbar-brand" href="<%= statsURL %>/" id="brandLink">stats.takepoint.io</a>
+                <a class="navbar-brand" href="/" id="brandLink">stats.takepoint.io</a>
             </div>
             <div class="pull-right col-xs-8 col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-2 col-lg-3 col-lg-offset-3 padding-right-8px">
                 <div class="input-group" id="searchBox">
@@ -140,7 +140,7 @@
                         <p>Copyleft <a class="copyleft">&copy;</a> <%= new Date(Date.now()).getFullYear() %> takepoint.io. All rights reversed.</p>
                     </div>
                     <div class="col-xs-6 margin-top-10px" style="text-align: right">
-                        <a class="plain-link" href="<%= statsURL %>/about">About</a> | <a class="plain-link" href="<%= statsURL %>/privacy">Privacy Policy</a>
+                        <a class="plain-link" href="/about">About</a> | <a class="plain-link" href="/privacy">Privacy Policy</a>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
     </div>
 
     <!-- JavaScripts -->
-    <script data-cfasync="false" src="<%= statsURL %>/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
     
