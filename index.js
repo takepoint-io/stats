@@ -34,7 +34,8 @@ app.get('/user/*', async (req, res) => {
 });
 
 app.get('/about', async (req, res) => {
-    res.status(200).send("Coming soon");
+    let about = await renderers.about();
+    res.status(200).send(about);
 });
 
 app.use('/img', express.static('img'));

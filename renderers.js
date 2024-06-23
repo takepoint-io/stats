@@ -263,6 +263,10 @@ const renderers = {
         });
         return html;
     },
+    about: async () => {
+        let html = await ejs.renderFile('./templates/about.ejs');
+        return html;
+    },
     notFound: async () => {
         let html = await ejs.renderFile('./templates/404.ejs');
         return html;
