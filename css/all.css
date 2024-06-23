@@ -89,6 +89,40 @@ p, td {
 	margin-bottom:0px;
 	height: 40px;
 }
+  
+.not-found{
+	background: url('/img/oops.png');
+	height: 700px;
+	background-size: cover;
+	position: relative;
+	border-radius: 6px;
+	align-content: center;
+}
+
+.not-found-content{
+	max-width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.not-found-content h1 {
+	font-size: 50px;
+}
+
+.not-found-content p {
+	font-size: 30px !important;
+}
+
+.not-found-overlay{
+	background-color: rgba(0, 0, 0, 0.2);
+	height: 100%;
+	width: 100%;
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-radius: 6px;
+}
 
 .list-group-item{
 	background-color:#f1f1f1;

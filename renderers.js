@@ -43,7 +43,7 @@ const leaderboardMappings = {
         sortfunc: { kills: -1, createdAt: -1 },
         poi: '.kills',
         query: { kills: { $gt: 0 } },
-        format: (v) => v.toLocaleString(),
+        format: (v) => v.toLocaleString(undefined, {minimumFractionDigits: 2}),
         color: 'yellow'
     },
     kdratios: {
@@ -261,6 +261,10 @@ const renderers = {
             player,
             formatTime: leaderboardMappings.hours.format
         });
+        return html;
+    },
+    notFound: async () => {
+        let html = await ejs.renderFile('./templates/404.ejs');
         return html;
     }
 };
