@@ -7,6 +7,11 @@ const port = 8001;
 const app = express();
 app.use(cors({ origin: "*" }));
 
+const staticPages = [
+    "changelog",
+    "about",
+    "privacy"
+];
 const $404 = async (res) => res.status(404).send(await renderers.notFound());
 
 app.get('/', (req, res) => {
@@ -33,10 +38,13 @@ app.get('/user/*', async (req, res) => {
     res.status(200).send(playerStats);
 });
 
-app.get('/about', async (req, res) => {
-    let about = await renderers.about();
-    res.status(200).send(about);
-});
+for (let staticPage of staticPages) {
+    app.get('/' + staticPage, async (req, res) => {
+        let page = await renderers[staticPage]();
+        res.status(200).send(page);
+    });
+}
+
 
 app.use('/img', express.static('img'));
 app.use('/css', express.static('css'));

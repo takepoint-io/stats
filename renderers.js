@@ -267,6 +267,14 @@ const renderers = {
         let html = await ejs.renderFile('./templates/about.ejs');
         return html;
     },
+    changelog: async () => {
+        let html = await ejs.renderFile('./templates/changelog.ejs');
+        return html;
+    },
+    privacy: async() => {
+        let html = await ejs.renderFile('./templates/privacy.ejs');
+        return html;
+    },
     notFound: async () => {
         let html = await ejs.renderFile('./templates/404.ejs');
         return html;
