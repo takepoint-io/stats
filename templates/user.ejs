@@ -167,8 +167,10 @@
                                     <h3><%= player.mostUsedWeapon[0].selected ? player.mostUsedWeapon[1] : "None" %></h3>
                                     <p>Selected <%= player.mostUsedWeapon[0].selected.toLocaleString() %> times</p>
                                 </td>
-                                <td><img id="classImage"
-                                        src="/img/<%= player.mostUsedWeapon[1] %>.jpg"></td>
+                                <td>
+                                <% if (player.mostUsedWeapon[0].selected) { %>
+                                    <img id="classImage" src="/img/<%= player.mostUsedWeapon[1] %>.jpg"></td>
+                                <% } %>
                             </tr>
                             <tr>
                                 <td>
@@ -187,8 +189,10 @@
                                     <h3><%= player.mostUsedPerk[1] ? player.mostUsedPerk[0] : "None" %></h3>
                                     <p>Used <%= player.mostUsedPerk[1].toLocaleString() %> times</p>
                                 </td>
-                                <td><img id="classImage"
-                                        src="/img/<%= player.mostUsedPerk[0] %>.jpg"></td>
+                                <td>
+                                <% if (player.mostUsedPerk[1]) { %>
+                                    <img id="classImage" src="/img/<%= player.mostUsedPerk[0] %>.jpg"></td>
+                                <% } %> 
                             </tr>
                         </tbody>
                     </table>
