@@ -235,12 +235,11 @@ const renderers = {
             table += record;
         }
         
-        let html = await ejs.renderFile('./templates/leaderboard.ejs', { 
+        return await renderPage('leaderboard', { 
             data: which, 
             statsURL,
             table,
         });
-        return html;
     },
     player: async (username) => {
         let playersFound = await players.find({ usernameLower: username.toLowerCase() }).toArray();
@@ -257,29 +256,31 @@ const renderers = {
         let perks = Object.keys(player.perks)
         let mostUsedPerkName = perks.sort((a, b) => perks[b] - perks[a])[0];
         player.mostUsedPerk = [mostUsedPerkName, player.perks[mostUsedPerkName]];
-        let html = await ejs.renderFile('./templates/user.ejs', {
+
+        return await renderPage('user', {
             player,
             formatTime: leaderboardMappings.hours.format
         });
-        return html;
     },
     about: async () => {
-        let html = await ejs.renderFile('./templates/about.ejs');
-        return html;
+        return await renderPage('about');
     },
     changelog: async () => {
-        let html = await ejs.renderFile('./templates/changelog.ejs');
-        return html;
+        return await renderPage('changelog');
     },
     privacy: async() => {
-        let html = await ejs.renderFile('./templates/privacy.ejs');
-        return html;
+        return await renderPage('privacy');
     },
     notFound: async () => {
-        let html = await ejs.renderFile('./templates/404.ejs');
-        return html;
+        return await renderPage('404');
     }
 };
+
+async function renderPage(filename, data = {}) {
+    let content = await ejs.renderFile('./templates/' + filename + '.ejs', data);
+    let html = await ejs.renderFile('./templates/base.ejs', { body: content });
+    return html;
+}
 
 function createTD(html) {
     return `<td>${html}</td>`
