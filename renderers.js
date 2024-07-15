@@ -70,6 +70,9 @@ const renderers = {
     privacy: async() => {
         return await renderPage('privacy');
     },
+    terms: async() => {
+        return await renderPage('terms');
+    },
     notFound: async () => {
         return await renderPage('404');
     }

@@ -10,7 +10,8 @@ app.use(cors({ origin: "*" }));
 const staticPages = [
     "changelog",
     "about",
-    "privacy"
+    "privacy",
+    "terms"
 ];
 const $404 = async (res) => res.status(404).send(await renderers.notFound());
 
