@@ -1,0 +1,58 @@
+<div class="container margin-top-15px no-padding-left no-padding-right">
+    <div class="panel panel-default module-styling no-border">
+        <style>
+            #passwdsuccess, #passwdfailure {
+                border-radius: 10px;
+                justify-content: center;
+                display: flex;
+            }
+            #passwdsuccess {
+                background-color: rgb(208, 255, 190);
+            }
+            #passwdfailure {
+                background-color: rgb(255, 190, 190);
+            }
+            .fa-check-circle, .fa-times-circle {
+                margin-top: 2px;
+                padding-right: 5px;
+            }
+        </style>
+        <% if (success === 'true') { %>
+            <div class="panel-heading" id="passwdsuccess">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                Password reset successfully!
+            </div>
+        <% } else if (success === 'false') { %>
+            <div class="panel-heading" id="passwdfailure">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                <%= error || "There was an error resetting your password. (expired link?)" %>
+            </div>
+        <% } %>
+        <div class="panel-heading">Create a new password</div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" method="POST"
+                action="/password/create">
+                <input type="hidden" name="token" value=".">
+                <div class="form-group">
+                    <label for="passwd" class="col-md-4 control-label">New Password</label>
+                    <div class="col-md-6">
+                        <input id="passwd" type="password" class="form-control" name="passwd" value="">
+                    </div>
+
+                    <label for="passwdConfirm" class="col-md-4 control-label">Confirm Password</label>
+                    <div class="col-md-6">
+                        <input id="passwdConfirm" type="password" class="form-control" name="passwdConfirm" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-btn fa-reply"></i> Reset Password
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>document.querySelector("[name=token]").value = new URLSearchParams(window.location.search).get("token");</script>
+    </div>
+</div>

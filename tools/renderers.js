@@ -1,21 +1,12 @@
-require('dotenv').config();
 const ejs = require('ejs');
-const { MongoClient, ServerApiVersion } = require("mongodb");
+
 const TimeAgo = require('javascript-time-ago');
 const en = require('javascript-time-ago/locale/en');
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo('en-US');
-const leaderboardMappings = require('./leaderboardMappings');
 
-const whichDatabase = process.env.isDev == "yes" ? "takepoint-dev" : "takepoint";
-const mongoDB = new MongoClient(process.env.mongoConnectionStr, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
-});
-const db = mongoDB.db(whichDatabase);
+const leaderboardMappings = require('../leaderboardMappings');
+const db = require('./database');
 const players = db.collection("players");
 
 
@@ -75,6 +66,16 @@ const renderers = {
     },
     notFound: async () => {
         return await renderPage('404');
+    },
+    passwordReset: async (success) => {
+        return await renderPage('/password/reset', {
+            success
+        });
+    },
+    passwordCreate: async (success, error) => {
+        return await renderPage('/password/create', {
+            success, error
+        });
     }
 };
 

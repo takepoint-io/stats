@@ -1,0 +1,51 @@
+<div class="container margin-top-15px no-padding-left no-padding-right">
+    <div class="panel panel-default module-styling no-border">
+        <style>
+            #emailsuccess, #emailfailure {
+                border-radius: 10px;
+                justify-content: center;
+                display: flex;
+            }
+            #emailsuccess {
+                background-color: rgb(208, 255, 190);
+            }
+            #emailfailure {
+                background-color: rgb(255, 190, 190);
+            }
+            .fa-check-circle, .fa-times-circle {
+                margin-top: 2px;
+                padding-right: 5px;
+            }
+        </style>
+        <% if (success === 'true') { %>
+            <div class="panel-heading" id="emailsuccess">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                We'll send you a reset link if that email matched an account in our records.
+            </div>
+        <% } else if (success === 'false'){ %>
+            <div class="panel-heading" id="emailfailure">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                That email doesn't appear to be formatted correctly.
+            </div>
+        <% } %>
+        <div class="panel-heading">Reset Password</div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" method="POST"
+                action="/password/reset">
+                <div class="form-group">
+                    <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                    <div class="col-md-6">
+                        <input id="email" type="email" class="form-control" name="email" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
