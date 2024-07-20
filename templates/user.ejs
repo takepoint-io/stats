@@ -4,6 +4,12 @@
             <h2 class="text-center">
                 <%= player.username %> Player Summary
             </h2>
+            <div id="profile-badges">
+                <h4 class="text-center">Badges</h4>
+                <% for (let badge of player.badges) { %>
+                    <img class="takepoint-badge" src="/img/badges/<%= badge.name %>.png" title="<%= badge.info %>">
+                <% } %>
+            </div>
             <h2 class="text-center key-stat">
                 <%= player.pointsTaken.toLocaleString() %> Points Taken
             </h2>
