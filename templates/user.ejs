@@ -7,7 +7,9 @@
             <div id="profile-badges">
                 <h4 class="text-center">Badges</h4>
                 <% for (let badge of player.badges) { %>
-                    <img class="takepoint-badge" src="/img/badges/<%= badge.name %>.png" title="<%= badge.info %>">
+                    <img class="takepoint-badge" src="/img/badges/<%= badge.name %>.png" title="
+                        <%= badge.info + (badge.timestamp ? `\n\nAchieved on ${badge.timestamp}` : '') %>"
+                    >
                 <% } %>
             </div>
             <h2 class="text-center key-stat">
@@ -23,8 +25,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
-
                     <tr>
                         <td>Total Score</td>
                         <td>
