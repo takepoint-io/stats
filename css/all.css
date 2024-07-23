@@ -36,7 +36,7 @@ h3::first-letter {
 }
 
 .takepoint-badge {
-	height: 3em;
+	height: 2.5em;
 	margin-right: 0.25em;
 	transition: filter 0.2s;
 }
@@ -80,6 +80,17 @@ td {
 
 #profile-badges h4 {
 	margin-top: 5px;
+}
+
+#verified-check {
+	display: inline-block;
+	background-image: url('/img/verified.png');
+	width: 1em;
+	height: 1em;
+	background-size: contain;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	margin-bottom: 0.15em;
 }
 
 #brandLink {
