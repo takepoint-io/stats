@@ -132,6 +132,7 @@ for (let staticPage of staticPages) {
 
 app.use('/img', express.static('img'));
 app.use('/css', express.static('css'));
+app.use('/js', express.static('js'));
 
 app.get('*',function (req, res) {
     $404(res);

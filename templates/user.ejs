@@ -10,7 +10,7 @@
             <div id="profile-badges">
                 <h4 class="text-center">Badges</h4>
                 <% for (let badge of player.badges) { %>
-                    <img class="takepoint-badge" src="/img/badges/<%= badge.name %>.png" title="<%= badge.info + (badge.timestamp ? `\n\nAchieved on ${badge.timestamp}` : '') %>">
+                    <img class="takepoint-badge" src="/img/badges/<%= badge.name %>.png" info="<%= badge.info %>" timestamp="<%= badge.timestamp || '' %>">
                 <% } %>
             </div>
             <h2 class="text-center key-stat">
@@ -391,3 +391,4 @@
     </div>
     <div class="margin-bottom-50px"></div>
 </div>
+<script src="/js/user.js"></script>
