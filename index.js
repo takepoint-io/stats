@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const sha256 = require('js-sha256').sha256;
+const bcrypt = require('bcrypt');
 const renderers = require('./tools/renderers');
 const mail = require('./tools/mail');
 const db = require('./tools/database');
@@ -80,7 +80,7 @@ app.post('/password/*', async (req, res) => {
                         body.email, 
                         "Takepoints.io password reset",
                         `Hello,
-                        Please click this link to reset your password: https://stats.nitrogem35.pw/password/create?token=${token.value}
+                        Please click this link to reset your password: https://stats.takepoints.io/password/create?token=${token.value}
                         This link will expire in ${ttlHours} hours.
 
                         If you didn't request this email, you can ignore it safely.`
@@ -102,7 +102,7 @@ app.post('/password/*', async (req, res) => {
                 if (body.passwd === body.passwdConfirm && body.passwd.length >= 6 && body.passwd.length <= 200) {
                     let email = tokens.get(token);
                     tokens.delete(token);
-                    let hash = sha256(body.passwd);
+                    let hash = await bcrypt.hash(body.passwd, 8);
                     await players.updateOne({ email: email }, { $set: { passwordHash: hash } });
                     success = true;
                 } else {
